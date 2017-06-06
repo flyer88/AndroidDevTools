@@ -8,6 +8,10 @@
     android:layout_height="match_parent"
     tools:context="com.zmsoft.devtools.MainActivity"
     android:orientation="vertical">
-
+    <Button
+        android:text="showData"
+        android:id="@+id/show_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
