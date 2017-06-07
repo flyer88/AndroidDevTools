@@ -1,12 +1,15 @@
-package com.zmsoft.devtools;
+package com.dove.flyer.androiddevtools;
 
 import android.content.Context;
-import android.os.Build;
-import android.os.Trace;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.webkit.ValueCallback;
 import android.webkit.WebView;
+
+import com.dove.flyer.androiddevtools.webViewHelper.HtmlElementTable;
+import com.dove.flyer.androiddevtools.webViewHelper.HtmlFunctionHelper;
+import com.dove.flyer.androiddevtools.webViewHelper.HtmlElement;
+import com.dove.flyer.androiddevtools.webViewHelper.JsFunction;
+import com.dove.flyer.androiddevtools.webViewHelper.JsObject;
 
 /**
  * Created by dove on 2017/6/6.
@@ -80,16 +83,7 @@ public class JsonView {
             mParentView.addView(mWebView);
             mIsShow = true;
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            mWebView.evaluateJavascript(buildLoadCommand(json), new ValueCallback<String>() {
-                @Override
-                public void onReceiveValue(String s) {
-
-                }
-            });
-        } else {
-            mWebView.loadUrl(buildLoadCommand(json));
-        }
+        execJavaScript(mWebView,json);
         return this;
     }
 
@@ -98,14 +92,13 @@ public class JsonView {
      * @param json 需要展示的 json 数据
      * @return 构建出的 js 对象和方法
      */
-    String buildLoadCommand(String json){
+    void execJavaScript(WebView webView,String json){
         if (!json.startsWith("{")) json = "{" + json;
         if (!json.endsWith("}")) json = json + "}";
-        String changeJsonData = "nativeJsonData =  " + json + "\n";
-        String refreshFunc = "$(function() {\n" +
-                "        $(\"#json\").JSONView(nativeJsonData);\n" +
-                "        });\n";
-        return changeJsonData + refreshFunc;
+        JsObject jsObject = new JsObject(webView,"nativeJsonData");
+        jsObject.setValues(json);
+        JsFunction jsFunction = new JsFunction(webView,"showJSONView","$(\"#json\").JSONView(nativeJsonData);");
+        jsFunction.exec();
     }
 
     public WebTools getWebTools() {

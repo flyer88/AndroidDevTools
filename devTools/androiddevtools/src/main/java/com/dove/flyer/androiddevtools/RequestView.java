@@ -1,4 +1,4 @@
-package com.zmsoft.devtools;
+package com.dove.flyer.androiddevtools;
 
 /**
  * Created by flyer on 2017/6/6.

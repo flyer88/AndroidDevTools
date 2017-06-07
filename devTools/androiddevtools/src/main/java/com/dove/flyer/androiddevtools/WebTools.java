@@ -1,12 +1,9 @@
-package com.zmsoft.devtools;
+package com.dove.flyer.androiddevtools;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.webkit.ValueCallback;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 /**
